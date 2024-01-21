@@ -30,9 +30,7 @@ use {
         signature::Signature,
         transaction::{self, SanitizedTransaction, Transaction},
     },
-    solana_send_transaction_service::{
-        send_transaction_service::{TransactionInfo},
-    },
+    solana_send_transaction_service::send_transaction_service::TransactionInfo,
     std::{
         convert::TryFrom,
         sync::{Arc, RwLock},
@@ -89,13 +87,15 @@ fn get_parsed_transaction(
                         .map(|ix| ParsedInnerInstruction {
                             parent_index: i,
                             instruction: ParsedInstruction {
-                                program_id: accounts[ix.program_id_index as usize].clone(),
+                                program_id: accounts[ix.instruction.program_id_index as usize]
+                                    .clone(),
                                 accounts: ix
+                                    .instruction
                                     .accounts
                                     .iter()
                                     .map(|i| accounts[*i as usize].clone())
                                     .collect(),
-                                data: ix.data.clone(),
+                                data: ix.instruction.data.clone(),
                             },
                         })
                         .collect::<Vec<_>>(),
@@ -355,7 +355,7 @@ impl Banks for BanksServer {
             optimistically_confirmed_bank.get_signature_status_slot(&signature);
 
         let confirmations = if r_block_commitment_cache.root() >= slot
-            && r_block_commitment_cache.highest_confirmed_root() >= slot
+            && r_block_commitment_cache.highest_confirmed_slot() >= slot
         {
             None
         } else {
@@ -487,7 +487,8 @@ impl Banks for BanksServer {
             .transaction_map
             .read()
             .unwrap()
-            .get(&signature).cloned();
+            .get(&signature)
+            .cloned();
         if let Some(t) = tx.clone() {
             println!("{:?}", t);
         }
