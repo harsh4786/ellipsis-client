@@ -24,6 +24,10 @@ solana-accounts-db = {workspace = true}
 solana-send-transaction-service = { workspace = true } 
 solana-client = { workspace = true } 
 solana-vote-program = { workspace = true } 
+solana-banks-client = {workspace = true}
+solana-banks-server = {workspace = true}
+solana_rbpf = { workspace = true}
+solana-banks-interface = { workspace = true}
 async-trait = { workspace = true } 
 tokio = { workspace = true } 
 anyhow = { workspace = true } 
