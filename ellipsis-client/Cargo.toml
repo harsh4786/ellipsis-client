@@ -20,6 +20,7 @@ solana-bpf-loader-program = { workspace = true }
 solana-program-runtime = { workspace = true } 
 solana-runtime = { workspace = true } 
 solana-sdk = { workspace = true } 
+solana-accounts-db = {workspace = true}
 solana-send-transaction-service = { workspace = true } 
 solana-client = { workspace = true } 
 solana-vote-program = { workspace = true } 

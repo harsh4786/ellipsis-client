@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
 use solana_program_runtime::timings::ExecuteTimings;
-use solana_runtime::bank::{TransactionExecutionDetails, TransactionExecutionResult};
 use solana_sdk::{clock::MAX_PROCESSING_AGE, transaction::VersionedTransaction};
+use solana_accounts_db::transaction_results::{TransactionExecutionDetails, TransactionExecutionResult};
 
 use ellipsis_transaction_utils::{ParsedInnerInstruction, ParsedInstruction, ParsedTransaction};
 
@@ -288,7 +288,8 @@ fn simulate_transaction(
         post_simulation_accounts: _,
         units_consumed,
         return_data,
-    } = bank.simulate_transaction_unchecked(sanitized_transaction);
+        inner_instructions,
+    } = bank.simulate_transaction_unchecked(&sanitized_transaction, false);
     let simulation_details = TransactionSimulationDetails {
         logs,
         units_consumed,
