@@ -73,7 +73,7 @@ pub use {
     },
     solana_sdk::transaction_context::IndexOfAccount,
 };
-use crate::programs::{self, *};
+use crate::programs::{self};
 
 /// Errors from the program test environment
 #[derive(Error, Debug, PartialEq, Eq)]
